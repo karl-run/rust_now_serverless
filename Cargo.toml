@@ -1,0 +1,7 @@
+[package]
+name = "now_rust_serverless"
+version = "1.0.0"
+authors = ["Karl J. Overå <k@rl.run>"]
+
+[dependencies]
+rouille = "2.2.0"

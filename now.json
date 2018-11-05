@@ -1,0 +1,9 @@
+{
+  "name": "rust-serverless",
+  "alias": "rust-serverless",
+  "public": true,
+  "type": "docker",
+  "features": {
+    "cloud": "v2"
+  }
+}
