@@ -2,9 +2,12 @@ FROM rust:1.30-slim as base
 WORKDIR /usr/src
 COPY Cargo.lock Cargo.toml /usr/src/
 COPY src /usr/src/src
-RUN cargo build --release
+RUN apt-get update && apt-get install -y --no-install-recommends cmake musl-tools ruby
+RUN rustup target add x86_64-unknown-linux-musl
+RUN cargo build --target x86_64-unknown-linux-musl --release --locked
+RUN ls -al target/x86_64-unknown-linux-musl/release/
 
-FROM rust:1.30-slim
+FROM alpine:3.8
 WORKDIR /usr/src
-COPY --from=base /usr/src/target/release/now_rust_serverless .
+COPY --from=base /usr/src/target/x86_64-unknown-linux-musl/release/now_rust_serverless .
 CMD ["./now_rust_serverless"]
