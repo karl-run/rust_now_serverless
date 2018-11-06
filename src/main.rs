@@ -1,6 +1,14 @@
 
-#[macro_use]
-extern crate rouille;
+extern crate serde;
+#[macro_use] extern crate rouille;
+#[macro_use] extern crate serde_derive;
+
+use rouille::Response;
+
+#[derive(Serialize)]
+struct ResponsePayload {
+    message: String,
+}
 
 fn main() {
     println!("Now listening on port 5000");
@@ -8,12 +16,12 @@ fn main() {
     rouille::start_server("0.0.0.0:5000", move |request| {
         router!(request,
             (GET) (/secret) => {
-                rouille::Response::text(format!("Welcome to the secret"))
+                Response::json(&ResponsePayload{ message: "Welcome to the secret".to_owned() })
             },
             (GET) (/{path: String}) => {
-                rouille::Response::text(format!("Hello path: {}", path))
+                Response::json(&ResponsePayload{ message: format!("Hello path: {}", path) })
             },
-            _ => rouille::Response::empty_404()
+            _ => Response::empty_404()
         )
     });
 }

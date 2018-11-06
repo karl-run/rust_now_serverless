@@ -5,3 +5,5 @@ authors = ["Karl J. Overå <k@rl.run>"]
 
 [dependencies]
 rouille = "2.2.0"
+serde = "1.0.80"
+serde_derive = "1.0.80"
